@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Employee Leave System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+</head>
+
+<body style="width:90%;margin: 0 auto">
+    This is application page
+    <form method="POST">
+        <div class="form-group">
+            <label for="leaveType">Please select your leave type</label>
+            <select class="form-control" id="exampleFormControlSelect1" for="leaveType" name="leaveType">
+                <option value="annualLeave">Annual Leave</option>
+                <option value="medicalLeave">Medical Leave</option>
+                <option value="hospitalisationLeave">Hospitalisation Leave</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="leaveStart">Starting date of your absence</label>
+            <input class="form-control" id="date" name="leaveStart" placeholder="DD-MMM-YYYY" type="text" autocomplete="off" required/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="leaveEnd">End date of your absence</label>
+            <input class="form-control" id="date" name="leaveEnd" placeholder="DD-MMM-YYYY" type="text" autocomplete="off" required/>
+        </div>
+        <div class="form-group">
+            <label for="leaveReason">Reason</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="leaveReason" required></textarea>
+        </div>
+        <input type="submit">
+    </form>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <!-- Include Date Range Picker -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+
+    <script>
+        $(document).ready(function () {
+            var date_input = $('input[id="date"]'); //our date input has the name "date"
+            var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+            date_input.datepicker({
+                format: 'dd-M-yyyy',
+                container: container,
+                todayHighlight: true,
+                autoclose: true,
+            })
+        })
+    </script>
+</body>
+
+</html>

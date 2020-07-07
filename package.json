@@ -1,0 +1,27 @@
+{
+  "name": "project2",
+  "version": "1.0.0",
+  "description": "[![General Assembly Logo](/ga_cog.png)](https://generalassemb.ly)",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js",
+    "reseed": "mongoimport --jsonArray --db project --collection employeeLeave --drop --file ./db/seed/employee.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "alert": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
+    "ejs": "^3.1.3",
+    "express": "^4.17.1",
+    "jest": "^26.0.1",
+    "method-override": "^3.0.0",
+    "moment": "^2.27.0",
+    "mongodb": "^3.5.8",
+    "popups": "^1.1.3"
+  },
+  "devDependencies": {}
+}

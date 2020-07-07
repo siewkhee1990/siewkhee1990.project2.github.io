@@ -1,0 +1,130 @@
+[
+    {
+        "companyID": "S001",
+        "employeeName": "Adam",
+        "employeeID": "001",
+        "employeeRankCategory": "director",
+        "nric": "S9319291F",
+        "employeeGender": "male",
+        "employeeStatus": "married",
+        "employeeChild": 1,
+        "subordinate": ["002", "003"],
+        "tickets": [
+            {
+                "requestedBy": "Adam",
+                "submittedOn": "",
+                "lastUpdatedOn": "",
+                "leaveType": "",
+                "leaveReason": "",
+                "leaveStart": "",
+                "leaveEnd": "",
+                "applicationStatus": "Pending",
+                "processedBy": "",
+                "processedDate": ""
+            },
+            {
+                "requestedBy": "Adam",
+                "submittedOn": "",
+                "lastUpdatedOn": "",
+                "leaveType": "",
+                "leaveReason": "",
+                "leaveStart": "",
+                "leaveEnd": "",
+                "applicationStatus": "Pending",
+                "processedBy": "",
+                "processedDate": ""
+            }
+        ],
+        "leaveEntitlement": {
+            "annualLeave": 21,
+            "medicalLeave": 14,
+            "hospitalisationLeave": 20,
+            "childCareLeave": 3
+        }
+    },
+    {
+        "companyID": "S001",
+        "employeeName": "Eve",
+        "employeeID": "002",
+        "employeeRankCategory": "hr",
+        "nric": "S9412329E",
+        "employeeGender": "female",
+        "employeeStatus": "married",
+        "employeeChild": 1,
+        "subordinate": ["003"],
+        "tickets": [
+            {
+                "requestedBy": "Eve",
+                "submittedOn": "",
+                "lastUpdatedOn": "",
+                "leaveType": "",
+                "leaveReason": "",
+                "leaveStart": "",
+                "leaveEnd": "",
+                "applicationStatus": "Pending",
+                "processedBy": "",
+                "processedDate": ""
+            },
+            {
+                "requestedBy": "Eve",
+                "submittedOn": "",
+                "lastUpdatedOn": "",
+                "leaveType": "",
+                "leaveReason": "",
+                "leaveStart": "",
+                "leaveEnd": "",
+                "applicationStatus": "Pending",
+                "processedBy": "",
+                "processedDate": ""
+            }
+        ],
+        "leaveEntitlement": {
+            "annualLeave": 21,
+            "medicalLeave": 14,
+            "hospitalisationLeave": 20,
+            "childCareLeave": 3
+        }
+    },
+    {
+        "companyID": "S001",
+        "name": "Cain",
+        "employeeID": "003",
+        "employeeRankCategory": "admin",
+        "nric": "S9723269M",
+        "employeeGender": "male",
+        "employeeStatus": "single",
+        "employeeChild": 0,
+        "subordinate": [],
+        "tickets": [
+            {
+                "requestedBy": "Cain",
+                "submittedOn": "",
+                "lastUpdatedOn": "",
+                "leaveType": "",
+                "leaveReason": "",
+                "leaveStart": "",
+                "leaveEnd": "",
+                "applicationStatus": "Pending",
+                "processedBy": "",
+                "processedDate": ""
+            },
+            {
+                "requestedBy": "Cain",
+                "submittedOn": "",
+                "lastUpdatedOn": "",
+                "leaveType": "",
+                "leaveReason": "",
+                "leaveStart": "",
+                "leaveEnd": "",
+                "applicationStatus": "Pending",
+                "processedBy": "",
+                "processedDate": ""
+            }
+        ],
+        "leaveEntitlement": {
+            "annualLeave": 14,
+            "medicalLeave": 14,
+            "hospitalisationLeave": 20
+        }
+    }
+]

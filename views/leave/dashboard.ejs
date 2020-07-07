@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Employee Leave System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+</head>
+
+<body style="width:90%;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;">
+        <h3>
+            Dashboard: Welcome <%= data.employeeName %>
+        </h3>
+        <button onclick="location.href='/<%= data._id %>/application'">Apply New</button>
+    </div>
+    <br>
+    <div>
+        <table id="" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th colspan="9">My Submitted Leave</th>
+                </tr>
+                <tr>
+                    <th scope="col">S/N</th>
+                    <th scope="col">Requested By</th>
+                    <th scope="col">Leave Type</th>
+                    <th scope="col">Leave Start</th>
+                    <th scope="col">Leave End</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Processed by</th>
+                    <th scope="col">Processed on</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if ( data.tickets.length === 0 ) { %>
+                <tr>
+                    <th colspan="9">No record found!</th>
+                </tr>
+
+                <% } else { %>
+                <% for ( let i = 0; i < data.tickets.length; i++ ){ %>
+                <tr>
+                    <th scope="row"> <%= i + 1 %> </th>
+                    <td> <%= data.tickets[i].requestedBy %> </td>
+                    <td>
+                        <% if ( data.tickets[i].leaveType === "annualLeave" ) { %>
+                        Annual
+                        <% } else if ( data.tickets[i].leaveType === "medicalLeave" ) { %>
+                        Medical
+                        <% } else if ( data.tickets[i].leaveType === "hospitalisationLeave" ) { %>
+                        Hospitalisation
+                        <% } else {} %>
+                    </td>
+                    <td> <%= data.tickets[i].leaveStart %></td>
+                    <td> <%= data.tickets[i].leaveEnd %> </td>
+                    <td> <%= data.tickets[i].applicationStatus %> </td>
+                    <td> <%= data.tickets[i].processedBy %> </td>
+                    <td> <%= data.tickets[i].processedDate %> </td>
+                    <td>
+                        <button onclick="location.href='/<%= employeeID %>/<%= i %>/view'"><i class=" small
+                            material-icons" title="details">view_list</i></button>
+                        <button onclick="location.href='/<%= employeeID %>/<%= i %>/applicationEdit'"><i
+                                class="small material-icons" title="edit">edit</i></button>
+                        <button><i class="small material-icons" title="delete">delete</i></button>
+                    </td>
+                </tr>
+                <% } %>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+    <% if ( subUserData.length === 0 ) { %>
+    <% } else { %>
+    <br>
+    <div>
+        <table id="" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th colspan="9">Subordinate Submitted Leave</th>
+                </tr>
+                <tr>
+                    <th scope="col">S/N</th>
+                    <th scope="col">Requested By</th>
+                    <th scope="col">Leave Type</th>
+                    <th scope="col">Leave Start</th>
+                    <th scope="col">Leave End</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Processed by</th>
+                    <th scope="col">Processed on</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for ( let i = 0; i < subUserData.length; i++ ) { %>
+                <tr>
+                    <th scope="row"> <%= i + 1 %> </th>
+                    <td> <%= subUserData[i].requestedBy %> </td>
+                    <td>
+                        <% if ( subUserData[i].leaveType === "annualLeave" ) { %>
+                        Annual
+                        <% } else if ( subUserData[i].leaveType === "medicalLeave" ) { %>
+                        Medical
+                        <% } else if ( subUserData[i].leaveType === "hospitalisationLeave" ) { %>
+                        Hospitalisation
+                        <% } else {} %>
+                    </td>
+                    <td> <%= subUserData[i].leaveStart %></td>
+                    <td> <%= subUserData[i].leaveEnd %> </td>
+                    <td> <%= subUserData[i].applicationStatus %> </td>
+                    <td> <%= subUserData[i].processedBy %> </td>
+                    <td> <%= subUserData[i].processedDate %> </td>
+                    <td>
+                        <button><i class="small material-icons" title="approve">done</i></button>
+                        <button><i class="small material-icons" title="reject">clear</i></button>
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+    <% } %>
+
+    <script>
+        $(document).ready(function () {
+            $('table.display').DataTable();
+        });
+    </script>
+</body>
+
+</html>
