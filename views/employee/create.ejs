@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Employee Leave System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+</head>
+
+<body style="width: 90%;margin: 0 auto">
+    <h5>Create New Employee: please provide employee info below</h5>
+    <form action="/<%=userID%>/employeeCreate" method="POST">
+        <div class="col-md-6 mb-3">
+            <label for="employeeName">Employee's Full Name</label>
+            <input type="text" name="employeeName" class="form-control" id="disabledTextInput"
+                placeholder="Please enter employee's full name" required>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="employeeID">Employee's ID</label>
+            <input type="text" name="employeeID" class="form-control" id="disabledTextInput"
+                value="<%= newID %>" readonly>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="employeeRankCategory">Employee's Designation</label>
+            <input type="text" name="employeeRankCategory" class="form-control" id="disabledTextInput"
+                placeholder="Please enter employee's designation" required>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="nric">Employee's NRIC</label>
+            <input type="text" name="nric" class="form-control" id="disabledTextInput"
+                placeholder="Please enter employee's NRIC" required>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="employeeGender">Employee's Gender</label>
+            <select class="form-control" id="exampleFormControlSelect1" for="employeeGender" name="employeeGender" required>
+                <option value="male"> male </option>
+                <option value="female"> female </option>
+            </select>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="employeeStatus">Employee's Status</label>
+            <select class="form-control" id="exampleFormControlSelect1" for="employeeStatus" name="employeeStatus" required>
+                <option value="single"> single </option>
+                <option value="married"> married </option>
+                <option value="widowed"> widowed </option>
+                <option value="divorsed"> divorsed </option>
+            </select>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="employeeChild">Employee's Child</label>
+            <select class="form-control" id="exampleFormControlSelect1" for="employeeChild" name="employeeChild" required>
+                <option value="0"> 0 </option>
+                <option value="1"> 1 </option>
+                <option value="2"> 2 </option>
+                <option value="3"> 3 </option>
+                <option value="4"> 4 </option>
+                <option value="5"> 5 </option>
+            </select>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="reportTo">Employee's Manager</label>
+            <% for ( let i = 0; i < data.length; i++ ) { %>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" name="reportTo" value="<%= data[i].employeeName %>">
+                <label class="form-check-label" for="reportTo"><%= data[i].employeeName %></label>
+            </div>
+            <% } %>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="leaveEntitlement">Employee's Leave Entitlement</label>
+            
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input type="checkbox" aria-label="Checkbox for following text input">
+                    </div>
+                    <label class="input-group-text" >Annual Leave</label>
+                </div>
+                <input type="text" class="form-control" aria-label="Number of days" name="annualLeave">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input type="checkbox" aria-label="Checkbox for following text input">
+                    </div>
+                    <label class="input-group-text" >Medical Leave</label>
+                </div>
+                <input type="text" class="form-control" aria-label="Number of days" name="medicalLeave">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input type="checkbox" aria-label="Checkbox for following text input">
+                    </div>
+                    <label class="input-group-text" >Hospitalisation Leave</label>
+                </div>
+                <input type="text" class="form-control" aria-label="Number of days" name="hospitalisationLeave">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input type="checkbox" aria-label="Checkbox for following text input">
+                    </div>
+                    <label class="input-group-text" >Compassionate Leave</label>
+                </div>
+                <input type="text" class="form-control" aria-label="Number of days" name="compassionateLeave">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input type="checkbox" aria-label="Checkbox for following text input">
+                    </div>
+                    <label class="input-group-text" >Child Care Leave</label>
+                </div>
+                <input type="text" class="form-control" aria-label="Number of days" name="childCareLeave">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input type="checkbox" aria-label="Checkbox for following text input">
+                    </div>
+                    <label class="input-group-text" >Marriage Leave</label>
+                </div>
+                <input type="text" class="form-control" aria-label="Number of days" name="marriageLeave">
+            </div>
+            
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <button type="submit" class="btn btn-primary">Create Employee</button>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <button type="reset" class="btn btn-primary" onclick="window.location.href='/<%=userID%>'">Go
+                Back</button>
+        </div>
+    </form>
+</body>
+
+</html>

@@ -26,6 +26,12 @@
                     <option value="annualLeave" <%= data.leaveType === "annualLeave" ? "selected" : "" %> >Annual Leave</option>
                     <option value="medicalLeave" <%= data.leaveType === "medicalLeave" ? "selected" : "" %> >Medical Leave</option>
                     <option value="hospitalisationLeave" <%= data.leaveType === "hospitalisationLeave" ? "selected" : "" %> >Hospitalisation Leave</option>
+                    <% if ( userData.leaveEntitlement.childCareLeave !== undefined ) { %>
+                    <option value="childCareLeave" <%= data.leaveType === "childCareLeave" ? "selected" : "" %> >Child Care Leave</option>
+                    <% } %>
+                    <% if ( userData.leaveEntitlement.marriageLeave !== undefined ) { %>
+                        <option value="marriageLeave" <%= data.leaveType === "marriageLeave" ? "selected" : "" %> >Marriage Leave</option>
+                        <% } %>
                 </select>
             </div>
             <div class="form-group">

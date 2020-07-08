@@ -25,10 +25,18 @@
 
 <body style="width:90%;margin:0 auto">
     <div style="display:flex;justify-content:space-between;">
-        <h3>
-            Dashboard: Welcome <%= data.employeeName %>
-        </h3>
-        <button onclick="location.href='/<%= data._id %>/application'">Apply New</button>
+        <div>
+            <h3>
+                Dashboard: Welcome <%= data.employeeName %>
+            </h3>
+        </div>
+        <div style="align-items: flex-end;">
+            <% if ( data.employeeRankCategory === "hr" ) { %>
+            <button onclick="location.href='/<%= data._id %>/employeeManage'">Manage Employee</button>
+            <button onclick="location.href='/<%= data._id %>/employeeCreate'">Create New Employee</button>
+            <% } %>
+            <button onclick="location.href='/<%= data._id %>/application'">New Leave Application</button>
+        </div>
     </div>
     <br>
     <div>
@@ -67,6 +75,8 @@
                         Medical
                         <% } else if ( data.tickets[i].leaveType === "hospitalisationLeave" ) { %>
                         Hospitalisation
+                        <% } else if ( data.tickets[i].leaveType === "childCareLeave" ) { %>
+                        Child Care
                         <% } else {} %>
                     </td>
                     <td> <%= data.tickets[i].leaveStart %></td>
@@ -79,7 +89,11 @@
                             material-icons" title="details">view_list</i></button>
                         <button onclick="location.href='/<%= employeeID %>/<%= i %>/applicationEdit'"><i
                                 class="small material-icons" title="edit">edit</i></button>
-                        <button><i class="small material-icons" title="delete">delete</i></button>
+                        <% if ( data.tickets[i].applicationStatus !== "Approved" || data.tickets[i].applicationStatus !== "Rejected" ) { %>
+                        <form action="/<%= employeeID %>/<%= i %>/deleteTicket?_method=DELETE" method="POST"
+                            style="display:inline-block;"><button><i class="small material-icons"
+                                    title="delete">delete</i></button></form>
+                        <% } %>
                     </td>
                 </tr>
                 <% } %>
@@ -128,8 +142,27 @@
                     <td> <%= subUserData[i].processedBy %> </td>
                     <td> <%= subUserData[i].processedDate %> </td>
                     <td>
-                        <button><i class="small material-icons" title="approve">done</i></button>
-                        <button><i class="small material-icons" title="reject">clear</i></button>
+                        <% if ( subUserData[i].applicationStatus === "Pending" || subUserData[i].applicationStatus === "" ) { %>
+                        <form
+                            action="/<%= employeeID %>/<%= subUserData[i].requestedBy %>/<%= subUserData[i].index %>/approve"
+                            method="POST" style="display:inline-block;"><button><i class="small material-icons"
+                                    title="approve">done</i></button></form>
+                        <form
+                            action="/<%= employeeID %>/<%= subUserData[i].requestedBy %>/<%= subUserData[i].index %>/reject"
+                            method="POST" style="display:inline-block;"><button><i class="small material-icons"
+                                    title="reject">clear</i></button></form>
+                        <% } else if ( subUserData[i].applicationStatus === "Approved" ) { %>
+                        <form
+                            action="/<%= employeeID %>/<%= subUserData[i].requestedBy %>/<%= subUserData[i].index %>/reject"
+                            method="POST" style="display:inline-block;"><button><i class="small material-icons"
+                                    title="reject">clear</i></button></form>
+                        <% } else if ( subUserData[i].applicationStatus === "Rejected" ) { %>
+                        <form
+                            action="/<%= employeeID %>/<%= subUserData[i].requestedBy %>/<%= subUserData[i].index %>/approve"
+                            method="POST" style="display:inline-block;"><button><i class="small material-icons"
+                                    title="approve">done</i></button></form>
+
+                        <% } %>
                     </td>
                 </tr>
                 <% } %>

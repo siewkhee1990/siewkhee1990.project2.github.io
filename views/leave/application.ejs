@@ -22,30 +22,92 @@
 </head>
 
 <body style="width:90%;margin: 0 auto">
-    This is application page
-    <form method="POST">
-        <div class="form-group">
-            <label for="leaveType">Please select your leave type</label>
-            <select class="form-control" id="exampleFormControlSelect1" for="leaveType" name="leaveType">
-                <option value="annualLeave">Annual Leave</option>
-                <option value="medicalLeave">Medical Leave</option>
-                <option value="hospitalisationLeave">Hospitalisation Leave</option>
-            </select>
+    <h4>Please fill in all the field and submit </h4>
+    <div style="display:flex;justify-content: space-between;">
+        <div style="width:50%">
+            <form action="/<%= userID %>/application?_method=POST" method="POST">
+                <div class="form-group">
+                    <label for="leaveType">Please select your leave type</label>
+                    <select class="form-control" id="exampleFormControlSelect1" for="leaveType" name="leaveType">
+                        <% for ( let i = 0; i < entitlementArray.length; i++ ) { %>
+                        <% if (data[entitlementArray[i]]) { %>
+                        <option value="<%= entitlementArray[i] %>">
+                            <% if ( entitlementArray[i] === "annualLeave" ) { %>
+                            Annual Leave
+                            <% } else if ( entitlementArray[i] === "medicalLeave" ) { %>
+                            Medical Leave
+                            <% } else if ( entitlementArray[i] === "hospitalisationLeave" ) { %>
+                            Hospitalisation Leave
+                            <% } else if ( entitlementArray[i] === "childCareLeave" ) { %>
+                            Child Care Leave
+                            <% } else if ( entitlementArray[i] === "marriageLeave" ) { %>
+                            Marriage Leave
+                            <% } else if ( entitlementArray[i] === "compassionateLeave" ) { %>
+                            Compassionate Leave
+                            <% } %>
+                        </option>
+                        <% } %>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="leaveStart">Starting date of your absence</label>
+                    <input class="form-control" id="date" name="leaveStart" placeholder="DD-MMM-YYYY" type="text"
+                        autocomplete="off" required />
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="leaveEnd">End date of your absence</label>
+                    <input class="form-control" id="date" name="leaveEnd" placeholder="DD-MMM-YYYY" type="text"
+                        autocomplete="off" required />
+                </div>
+                <div class="form-group">
+                    <label for="leaveReason">Reason</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="leaveReason"
+                        required></textarea>
+                </div>
+                <input type="submit">
+            </form>
         </div>
-        <div class="form-group">
-            <label class="control-label" for="leaveStart">Starting date of your absence</label>
-            <input class="form-control" id="date" name="leaveStart" placeholder="DD-MMM-YYYY" type="text" autocomplete="off" required/>
+        <div style="width:30%">
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <h5>Leave Type</h5>
+                        </th>
+                        <th style="text-align:center">
+                            <h5>Balance / Entitlement</h5>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for ( let i = 0; i < entitlementArray.length; i++ ) { %>
+                    <% if (data[entitlementArray[i]]) { %>
+                    <tr>
+                        <th>
+                            <% if ( entitlementArray[i] === "annualLeave" ) { %>
+                            Annual Leave
+                            <% } else if ( entitlementArray[i] === "medicalLeave" ) { %>
+                            Medical Leave
+                            <% } else if ( entitlementArray[i] === "hospitalisationLeave" ) { %>
+                            Hospitalisation Leave
+                            <% } else if ( entitlementArray[i] === "compassionateLeave" ) { %>
+                            Compassionate Leave
+                            <% } else if ( entitlementArray[i] === "childCareLeave" ) { %>
+                            Child Care Leave
+                            <% } else if ( entitlementArray[i] === "marriageLeave" ) { %>
+                            Marriage Leave
+                            <% } %>
+                        </th>
+                        <th style="text-align:center">
+                            <%= balanceLeaveArray[entitlementArray[i]]%>/<%= data[entitlementArray[i]] %></th>
+                    </tr>
+                    <% } %>
+                    <% } %>
+                </tbody>
+            </table>
         </div>
-        <div class="form-group">
-            <label class="control-label" for="leaveEnd">End date of your absence</label>
-            <input class="form-control" id="date" name="leaveEnd" placeholder="DD-MMM-YYYY" type="text" autocomplete="off" required/>
-        </div>
-        <div class="form-group">
-            <label for="leaveReason">Reason</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="leaveReason" required></textarea>
-        </div>
-        <input type="submit">
-    </form>
+    </div>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
