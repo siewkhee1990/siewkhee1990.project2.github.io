@@ -42,13 +42,14 @@ module.exports = app => {
     // GET route
     app.get('/:employeeID/employeeCreate', employeeController.createEmployee);
     app.get('/:employeeID/employeeManage', employeeController.viewEmployee);
-    app.get('/:employeeID/:employeeEdit', employeeController.editEmployee);
+    app.get('/:employeeID/:targetEmployee/edit', employeeController.editEmployee);
+    app.get('/:employeeID/:targetEmployee/details', employeeController.viewEmployeeDetails);
     // POST route
     app.post('/:employeeID/employeeCreate', employeeController.createEmployeeSubmit);
     // PUT route
-    app.put('/:employeeID/:employeeEdit/update', employeeController.updateEmployee);
+    app.put('/:employeeID/:targetEmployee/update', employeeController.updateEmployee);
     // DELETE route
-    app.delete('/:employeeID/employeeDelete', employeeController.deleteEmployee);
+    app.delete('/:employeeID/:targetEmployee/employeeDelete', employeeController.deleteEmployee);
 
     // app.get('/create', leaveController.toCreate);
     // app.get('/shop/:name', leaveController.show);   

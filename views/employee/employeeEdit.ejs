@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Employee Leave System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+</head>
+
+<body style="width: 90%;margin: 0 auto">
+    <div>
+        <form action="/<%= userID %>/<%= updateID %>/update?_method=PUT" method="POST">
+            <div>
+                <h5>Edit Employee Info: please update employee info below and click update once completed</h5>
+            </div>
+            <div style="display: flex;justify-content:space-between;width: 100%;">
+
+                <div style="width: 100%;">
+                    <div class="col-md-6 mb-3">
+                        <label for="employeeName">Employee's Full Name</label>
+                        <input type="text" name="employeeName" class="form-control" id="disabledTextInput"
+                            placeholder="Please enter employee's full name" value="<%= data.employeeName %>" required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="employeeID">Employee's ID</label>
+                        <input type="text" name="employeeID" class="form-control" id="disabledTextInput"
+                            value="<%= data.employeeID %>" readonly>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="employeeRankCategory">Employee's Designation</label>
+                        <input type="text" name="employeeRankCategory" class="form-control" id="disabledTextInput"
+                            placeholder="Please enter employee's designation" value="<%= data.employeeRankCategory %>"
+                            required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="nric">Employee's NRIC</label>
+                        <input type="text" name="nric" class="form-control" id="disabledTextInput"
+                            placeholder="Please enter employee's NRIC" value="<%= data.nric %>" required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="employeeGender">Employee's Gender</label>
+                        <select class="form-control" id="exampleFormControlSelect1" for="employeeGender"
+                            name="employeeGender" required>
+                            <option value="male" <%= data.employeeGender === "male" ? "selected" : "" %>> male </option>
+                            <option value="female" <%= data.employeeGender === "female" ? "selected" : "" %>> female
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="employeeStatus">Employee's Status</label>
+                        <select class="form-control" id="exampleFormControlSelect1" for="employeeStatus"
+                            name="employeeStatus" required>
+                            <option value="single" <%= data.employeeStatus === "single" ? "selected" : "" %>> single
+                            </option>
+                            <option value="married" <%= data.employeeStatus === "married" ? "selected" : "" %>> married
+                            </option>
+                            <option value="widowed" <%= data.employeeStatus === "widowed" ? "selected" : "" %>> widowed
+                            </option>
+                            <option value="divorsed" <%= data.employeeStatus === "divorsed" ? "selected" : "" %>>
+                                divorsed
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="width: 100%;">
+                    <div class="col-md-6 mb-3">
+                        <label for="employeeChild">Employee's Child</label>
+                        <select class="form-control" id="exampleFormControlSelect1" for="employeeChild"
+                            name="employeeChild" required>
+                            <% for ( let i = 0; i < 6; i++ ) { %>
+                            <option value="<%=i%>" <%= data.employeeChild === i ? "selected" : "" %>> <%=i%> </option>
+                            <% } %>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="subordinate">Employee's Subordinate</label>
+                        <% for ( let i = 0; i < allData.length; i++ ) { %>
+                        <% if ( allData[i].employeeID !== data.employeeID ) { %>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="subordinate"
+                                value="<%= allData[i].employeeID %>"
+                                <%= data.subordinate.includes(allData[i].employeeID) ? "checked" : "" %>>
+                            <label class="form-check-label" for="subordinate"><%= allData[i].employeeName %></label>
+                        </div>
+                        <% } %>
+                        <% } %>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="leaveEntitlement">Employee's Leave Entitlement</label>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" aria-label="Checkbox for following text input">
+                                </div>
+                                <label class="input-group-text">Annual Leave</label>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Number of days" name="annualLeave"
+                                value="<%= data.leaveEntitlement.annualLeave %>">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" aria-label="Checkbox for following text input">
+                                </div>
+                                <label class="input-group-text">Medical Leave</label>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Number of days" name="medicalLeave"
+                                value="<%= data.leaveEntitlement.medicalLeave %>">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" aria-label="Checkbox for following text input">
+                                </div>
+                                <label class="input-group-text">Hospitalisation Leave</label>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Number of days"
+                                name="hospitalisationLeave" value="<%= data.leaveEntitlement.hospitalisationLeave %>">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" aria-label="Checkbox for following text input">
+                                </div>
+                                <label class="input-group-text">Compassionate Leave</label>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Number of days"
+                                name="compassionateLeave" value="<%= data.leaveEntitlement.compassionateLeave %>">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" aria-label="Checkbox for following text input">
+                                </div>
+                                <label class="input-group-text">Child Care Leave</label>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Number of days" name="childCareLeave"
+                                value="<%= data.leaveEntitlement.childCareLeave %>">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" aria-label="Checkbox for following text input">
+                                </div>
+                                <label class="input-group-text">Marriage Leave</label>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Number of days" name="marriageLeave"
+                                value="<%= data.leaveEntitlement.marriageLeave %>">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="col-md-6 mb-3">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <button type="reset" class="btn btn-primary"
+                        onclick="window.location.href='/<%=userID%>/employeeManage'">Go
+                        Back</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

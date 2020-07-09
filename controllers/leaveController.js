@@ -166,7 +166,7 @@ module.exports = {
             let subUserTicket = await repositoryController.getSubUser(user.subordinate);
             repositoryController.momentifyTicketDate(user.tickets);
             repositoryController.momentifyTicketDate(subUserTicket);
-            res.render('leave/dashboard', { employeeID: ID, data: user, subUserData: subUserTicket });
+            res.render('leave/leaveDashboard', { employeeID: ID, data: user, subUserData: subUserTicket });
         } catch (err) {
             return res.render('errors/404', { err });
         }
@@ -178,7 +178,7 @@ module.exports = {
             let index = req.params.ticketIndex;
             let ticketData = user.tickets[index];
             repositoryController.momentifyDateInObject(ticketData);
-            res.render('leave/show', { data: ticketData, userID: ID, ticketIndex: index, userData: user });
+            res.render('leave/leaveShow', { data: ticketData, userID: ID, ticketIndex: index, userData: user });
         } catch (err) {
             return res.render('errors/404', { err });
         }
@@ -250,7 +250,7 @@ module.exports = {
             let index = req.params.ticketIndex;
             let ticketData = user.tickets[index];
             repositoryController.momentifyDateInObject(ticketData);
-            res.render('leave/edit', { data: ticketData, userID: ID, ticketIndex: index, userData: user });
+            res.render('leave/leaveEdit', { data: ticketData, userID: ID, ticketIndex: index, userData: user });
         } catch (err) {
             return res.render('errors/404', { err });
         }

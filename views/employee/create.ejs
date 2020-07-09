@@ -71,12 +71,9 @@
         <div class="col-md-6 mb-3">
             <label for="employeeChild">Employee's Child</label>
             <select class="form-control" id="exampleFormControlSelect1" for="employeeChild" name="employeeChild" required>
-                <option value="0"> 0 </option>
-                <option value="1"> 1 </option>
-                <option value="2"> 2 </option>
-                <option value="3"> 3 </option>
-                <option value="4"> 4 </option>
-                <option value="5"> 5 </option>
+                <% for ( let i = 0; i < 6; i++ ) { %>
+                    <option value="<%=i%>"> <%=i%> </option>    
+                <% } %>
             </select>
         </div>
 
@@ -84,7 +81,7 @@
             <label for="reportTo">Employee's Manager</label>
             <% for ( let i = 0; i < data.length; i++ ) { %>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1" name="reportTo" value="<%= data[i].employeeName %>">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" name="reportTo" value="<%= data[i].employeeID %>">
                 <label class="form-check-label" for="reportTo"><%= data[i].employeeName %></label>
             </div>
             <% } %>

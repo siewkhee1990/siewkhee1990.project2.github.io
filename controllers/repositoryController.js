@@ -3,6 +3,58 @@ const ObjectId = require('mongodb').ObjectID;
 const moment = require('moment');
 
 module.exports = {
+    async findUserByEmployeeID(employeeID) {
+        try {
+            return await db.employeeLeave.find({ "employeeID": employeeID }).toArray();
+        } catch (err) {
+            return res.render('errors/404', { err });
+        }
+    },
+    async addSubordinate(targetID, ID) {
+        try {
+            let [targetUser] = await this.findUserByEmployeeID(targetID);
+            await db.employeeLeave.updateOne(
+                { "_id": new ObjectId(targetUser._id) },
+                {
+                    $push: { subordinate: ID }
+                }
+            );
+        } catch (err) {
+            return res.render('errors/404', { err });
+        };
+    },
+    async employeeInfoUpdate(ID, data) {
+        try {
+            return await db.employeeLeave.findOneAndUpdate(
+                { "_id": new ObjectId(ID) },
+                {
+                    $set: {
+                        employeeName: data.employeeName,
+                        employeeRankCategory: data.employeeRankCategory,
+                        nric: data.nric,
+                        employeeGender: data.employeeGender,
+                        employeeStatus: data.employeeStatus,
+                        employeeChild: data.employeeChild,
+                        subordinate: data.subordinate,
+                        leaveEntitlement: {
+                            annualLeave: data.annualLeave,
+                            medicalLeave: data.medicalLeave,
+                            hospitalisationLeave: data.hospitalisationLeave,
+                            compassionateLeave: data.compassionateLeave,
+                            childCareLeave: data.childCareLeave,
+                            marriageLeave: data.marriageLeave
+                        }
+                    }
+                },
+                { upsert: true }
+            )
+        } catch (err) {
+            return res.render('errors/404', { err });
+        };
+    },
+    async deleteEmployee (ID){
+
+    },
     async findAll() {
         try {
             return await db.employeeLeave.find({}).toArray();
@@ -10,7 +62,7 @@ module.exports = {
             return res.render('errors/404', { err });
         };
     },
-    async createEmployee (obj) {
+    async createEmployee(obj) {
         try {
             return await db.employeeLeave.insertOne(
                 {

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Employee Leave System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</head>
+
+<body style="width:90%;margin:0 auto">
+    <div>
+        <div style="width: 100%;">
+            <h4>Your Employee Detailed Info</h4>
+        </div>
+        <div style="display:flex;justify-content:space-between;width: 100%;">
+            <div style="width: 45%;">
+                <form>
+                    <div class="form-group">
+                        <label class="control-label" for="employeeName">Employee's Full Name</label>
+                        <input class="form-control" id="date" name="employeeName" type="text"
+                            value="<%= data.employeeName %>" autocomplete="off" disabled />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="employeeID">Employee's ID</label>
+                        <input class="form-control" id="date" name="employeeID" type="text"
+                            value="<%= data.employeeID %>" autocomplete="off" disabled />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="employeeRankCategory">Employee's Designation</label>
+                        <input class="form-control" id="date" name="employeeRankCategory" placeholder="DD-MMM-YYYY"
+                            type="text" value="<%= data.employeeRankCategory%>" autocomplete="off" disabled />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="nric">Employee's NRIC</label>
+                        <input class="form-control" id="date" name="nric" placeholder="DD-MMM-YYYY" type="text"
+                            value="<%= data.nric%>" autocomplete="off" disabled />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="employeeGender">Employee's Gender</label>
+                        <select class="form-control" id="exampleFormControlSelect1" for="employeeGender"
+                            name="employeeGender" disabled>
+                            <option value="male" <%= data.employeeGender === "male" ? "selected" : "" %>>male</option>
+                            <option value="female" <%= data.employeeGender === "female" ? "selected" : "" %>>female
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="employeeStatus">Employee's Status</label>
+                        <select class="form-control" id="exampleFormControlSelect1" for="employeeGender"
+                            name="employeeStatus" disabled>
+                            <option value="single" <%= data.employeeStatus === "single" ? "selected" : "" %>>single
+                            </option>
+                            <option value="married" <%= data.employeeGender === "female" ? "selected" : "" %>>female
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="employeeStatus">Employee's Child</label>
+                        <select class="form-control" id="exampleFormControlSelect1" for="employeeGender"
+                            name="employeeStatus" disabled>
+                            <option value="0" <%= data.employeeChild === 0 ? "selected" : "" %>> 0 </option>
+                            <option value="1" <%= data.employeeChild === 1 ? "selected" : "" %>> 1 </option>
+                            <option value="2" <%= data.employeeChild === 2 ? "selected" : "" %>> 2 </option>
+                            <option value="3" <%= data.employeeChild === 3 ? "selected" : "" %>> 3 </option>
+                            <option value="4" <%= data.employeeChild === 4 ? "selected" : "" %>> 4 </option>
+                            <option value="5" <%= data.employeeChild === 5 ? "selected" : "" %>> 5 </option>
+                        </select>
+                    </div>
+
+                </form>
+            </div>
+            <div style="width: 45%;">
+                <form>
+                    <div class="form-group">
+                        <label for="employeeStatus">Employee's Subordinate</label>
+                        <% for ( let i = 0; i < allData.length; i++ ) { %>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="subordinate"
+                                value="<%= allData[i].employeeID %>"
+                                <%= data.subordinate.includes(allData[i].employeeID) ? "checked" : "" %> disabled>
+                            <label class="form-check-label" for="subordinate"><%= allData[i].employeeName %></label>
+                        </div>
+                        <% } %>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="leaveEntitlement">Employee's Leave Entitlement</label>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Annual Leave</label>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Number of days" name="annualLeave"
+                                value="<%= data.leaveEntitlement.annualLeave %>" disabled>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Medical Leave</label>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Number of days" name="medicalLeave"
+                                value="<%= data.leaveEntitlement.medicalLeave %>" disabled>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Hospitalisation Leave</label>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Number of days" name="hospitalisationLeave"
+                                value="<%= data.leaveEntitlement.hospitalisationLeave %>" disabled>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Compassionate Leave</label>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Number of days" name="compassionateLeave"
+                                value="<%= data.leaveEntitlement.compassionateLeave %>" disabled>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Child Care Leave</label>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Number of days" name="childCareLeave"
+                                value="<%= data.leaveEntitlement.childCareLeave %>" disabled>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Marriage Leave</label>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Number of days" name="marriageLeave"
+                                value="<%= data.leaveEntitlement.marriageLeave %>" disabled>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div>
+        <form action="/<%= userID %>/<%= theEmployeeID %>/edit">
+            <input type="submit" value="Edit Employee Info">
+        </form>
+        <button onclick="location.href='/<%=userID%>/employeeManage'">Go Back</button>
+    </div>
+    </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <!-- Include Date Range Picker -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+
+    <script>
+        $(document).ready(function () {
+            var date_input = $('input[id="date"]'); //our date input has the name "date"
+            var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+            date_input.datepicker({
+                format: 'dd-M-yyyy',
+                container: container,
+                todayHighlight: true,
+                autoclose: true,
+            })
+        })
+    </script>
+</body>
+
+</html>

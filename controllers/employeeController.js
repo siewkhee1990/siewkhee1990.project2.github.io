@@ -347,28 +347,77 @@ module.exports = {
             return res.render('errors/404', { err });
         }
     },
-    viewEmployee(req, res) {
-        console.log("view");
+    async viewEmployee(req, res) {
+        try {
+            let ID = req.params.employeeID;
+            let allUser = await repositoryController.findAll();
+            let [user] = await repositoryController.findUserByID(ID);
+            res.render('employee/employeeDashboard', { data: allUser, userID: ID, userData: user })
+        } catch (err) {
+            return res.render('errors/404', { err });
+        };
     },
-    editEmployee(req, res) {
-        console.log('edit');
+    async viewEmployeeDetails(req, res) {
+        try {
+            let ownID = req.params.employeeID;
+            let theEmployeeID = req.params.targetEmployee;
+            let [theEmployeeData] = await repositoryController.findUserByID(theEmployeeID);
+            let allUser = await repositoryController.findAll();
+            res.render('employee/employeeShow', { userID: ownID, theEmployeeID: theEmployeeID, data: theEmployeeData, allData: allUser });
+        } catch (err) {
+            return res.render('errors/404', { err });
+        };
+    },
+    async editEmployee(req, res) {
+        try {
+            let userID = req.params.employeeID;
+            let updateID = req.params.targetEmployee;
+            let [originalData] = await repositoryController.findUserByID(updateID);
+            let allUser = await repositoryController.findAll();
+            res.render('employee/employeeEdit', { userID: userID, updateID: updateID, data: originalData, allData: allUser });
+        } catch (err) {
+            return res.render('errors/404', { err });
+        };
     },
     async createEmployeeSubmit(req, res) {
         try {
-            console.log('submit');
             let ID = req.params.employeeID;
             let [user] = await repositoryController.findUserByID(ID);
             req.body.companyID = user.companyID;
-            await repositoryController.createEmployee(req.body);
-            res.redirect('/'+ID);
+            let toEmployee = req.body.reportTo;
+            let theEmployeeID = req.body.employeeID;
+            if (!toEmployee) {
+                await repositoryController.createEmployee(req.body);
+            } else if (typeof toEmployee === "string") {
+                await repositoryController.createEmployee(req.body);
+                await repositoryController.addSubordinate(toEmployee, theEmployeeID);
+            } else if (typeof toEmployee === "object") {
+                await repositoryController.createEmployee(req.body);
+                for (let i = 0; i < req.body.reportTo.length; i++) {
+                    await repositoryController.addSubordinate(toEmployee[i], theEmployeeID);
+                };
+            };
+            res.redirect('/' + ID + '/employeeManage');
         } catch (err) {
             return res.render('errors/404', { err });
         }
     },
-    updateEmployee(req, res) {
-        console.log('update');
+    async updateEmployee(req, res) {
+        try {
+            let ID = req.params.employeeID;
+            let target = req.params.targetEmployee;
+            let updateData = req.body;
+            if (!updateData.subordinate) {
+                updateData.subordinate = [];
+            };
+            await repositoryController.employeeInfoUpdate(target, updateData);
+            res.redirect('/' + ID + '/employeeManage');
+        } catch (err) {
+            return res.render('errors/404', { err });
+        }
     },
     deleteEmployee(req, res) {
+        let deleteID = req.params.targetEmployee;
         console.log('delete');
     }
     // let ID = req.params.employeeID;
