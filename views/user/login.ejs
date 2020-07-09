@@ -17,22 +17,27 @@
         crossorigin="anonymous"></script>
 </head>
 
-<body>
-    Login: Welcome to Leave System
-    <form action="/login" method="POST">
-        <!-- fieldset for account info -->
-        <!-- fieldset class="account-info">
-          <!-- username -->
-          <label for="username">USERNAME</label>
-          <input type="text" name="username" id="username" required />
-          <!-- password -->
-          <label for="password">PASSWORD</label>
-          <input type="password" name="password" id="password" required />
-        <!--/fieldset>
-        <!-- login button -->
-        <input type="submit" value="Login" />
-        <button onclick="location.href = '/resetPassword'" id = "reset">Reset Password</button>
-      </form>
+<body style="width:50%;margin:auto">
+    <form class="text-center border border-light p-5" action="/" method="POST">
+        <h2>Welcome to Leave System</h2>
+        <p class="h4 mb-4">Please sign in</p>
+        <!-- Username -->
+        <input type="text" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="Username" name="username">
+        <!-- Password -->
+        <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password"
+            name="password">
+            <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
+        <div class="d-flex justify-content-around">
+            <a href="/resetPassword">Forgot password?</a>
+            <a href="/register">Register?</a>
+        </div>
+        <!-- Sign in button -->
+        
+        <!-- Register -->
+        
+        </p>
+    </form>
+    <!-- Default form login -->
 </body>
 
 </html>

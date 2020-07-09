@@ -1,27 +1,33 @@
 const leaveController = require('./controllers/leaveController');
 const employeeController = require('./controllers/employeeController');
+const userController = require('./controllers/userController');
+const sessionController = require('./controllers/sessionController');
 
 module.exports = app => {
     // pre login routes
     // GET route
-    app.get('/', leaveController.login);
-    app.get('/resetPassword', leaveController.resetPasswordForm);
+    app.get('/', userController.login);
+    app.get('/register',userController.register);
+    app.get('/resetPassword', userController.resetPasswordForm);
     //app.get('/findUsername', leaveController.findUserForm);
 
     // POST route
-    app.post('/login', leaveController.checkLogin);
-    app.post('/reset/password', leaveController.resetPassword);
-    //app.post('/find/User', leaveController.find);
+    app.post('/', sessionController.createSessions);
+    app.post('/register',userController.userCreate);
+    //app.post('/login', userController.checkLogin);
+    app.post('/reset/password', userController.resetPassword);
 
+    // DELETE route
+    app.delete('/',sessionController.destroy);
 
     // logged in routes
-    // app.use((req, res, next) => {
-    //     if(req.session.currentUser) {
-    //         next();
-    //     } else {
-    //         return res.redirect('/');
-    //     }
-    // });
+    app.use((req, res, next) => {
+        if(req.session.currentUser) {
+            next();
+        } else {
+            return res.redirect('/');
+        }
+    });
 
     // GET route
     app.get('/:employeeID', leaveController.dash);

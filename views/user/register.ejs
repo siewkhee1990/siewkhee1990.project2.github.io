@@ -18,9 +18,9 @@
 </head>
 
 <body style="width:50%;margin:auto">
-    <form class="text-center border border-light p-5" action="#!">
-        <h2>Reset password</h2>
-        <h4>Please enter below required field</h4>
+    <form class="text-center border border-light p-5" action="/register" method="POST">
+        <h2>Registration</h2>
+        <h4>Please enter your information below</h4>
         <!-- Username -->
         <input type="text" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="NRIC" name="nric" required>
         <!-- Username -->
@@ -28,11 +28,14 @@
         <!-- Password -->
         <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password"
             name="password" required>
-        <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Confirmed Password"
-            name="confirmedPassword" required>
-        <!-- Sign in button -->
-        <button class="btn btn-info btn-block my-4" type="submit">Reset</button>
+
+        <button class="btn btn-info btn-block my-4" type="submit">Register</button>
         <button class="btn btn-info btn-block my-4" type="button" onclick="location.href='/'">Go Back</button>
+        <div class="d-flex justify-content-around">
+            <a href="/resetPassword">Forgot password?</a>
+        </div>
+        <!-- Sign in button -->
+
         </p>
     </form>
     <!-- Default form login -->

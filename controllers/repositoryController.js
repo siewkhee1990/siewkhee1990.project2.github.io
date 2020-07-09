@@ -1,8 +1,37 @@
 const db = require('../db');
 const ObjectId = require('mongodb').ObjectID;
 const moment = require('moment');
+//const { checkLogin } = require('./userController');
 
 module.exports = {
+    async findUserbyIC(nric) {
+        try {
+            return await db.employeeLeave.find({ "nric": nric }).toArray();
+        } catch (err) {
+            return res.render('errors/404', { err });
+        }
+    },
+    async checkExistingUser(nric) {
+        try {
+            return await db.user.find({ "nric": nric }).toArray();
+        } catch (err) {
+            return res.render('errors/404', { err });
+        }
+    },
+    async createUser(data) {
+        try {
+            return await db.user.insertOne(data);
+        } catch (err) {
+            return res.render('errors/404', { err });
+        }
+    },
+    async checkUsername(username) {
+        try {
+            return await db.user.find({ "username": username }).toArray();
+        } catch (err) {
+            return res.render('errors/404', { err });
+        }
+    },
     async findUserByEmployeeID(employeeID) {
         try {
             return await db.employeeLeave.find({ "employeeID": employeeID }).toArray();
@@ -52,8 +81,24 @@ module.exports = {
             return res.render('errors/404', { err });
         };
     },
-    async deleteEmployee (ID){
-
+    async deleteEmployee(ID) {
+        try {
+            return await db.employeeLeave.deleteOne(
+                { "_id": new ObjectId(ID) }
+            )
+        } catch (err) {
+            return res.render('errors/404', { err });
+        };
+    },
+    async deleteEmployeeIDinSubordinate(employeeID) {
+        try {
+            return await db.employeeLeave.updateMany(
+                { "subordinate": { $eq: employeeID } },
+                { $pull: { "subordinate": employeeID } }
+            )
+        } catch (err) {
+            return res.render('errors/404', { err });
+        };
     },
     async findAll() {
         try {
