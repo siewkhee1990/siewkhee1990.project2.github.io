@@ -30,12 +30,15 @@
                 Dashboard: Welcome <%= data.employeeName %>
             </h3>
         </div>
-        <div style="align-items: flex-end;">
+        <div style="display:flex;align-items:flex-end">
             <% if ( data.employeeRankCategory === "hr" || data.employeeRankCategory === "director" ) { %>
-            <button onclick="location.href='/<%= data._id %>/employeeManage'">Manage Employee</button>
-            <button onclick="location.href='/<%= data._id %>/employeeCreate'">Create New Employee</button>
+            <button class="btn btn-primary" style="margin-left:5px" onclick="location.href='/<%= data._id %>/employeeManage'">Manage Employee</button>
+            <button class="btn btn-primary" style="margin-left:5px" onclick="location.href='/<%= data._id %>/employeeCreate'">Create New Employee</button>
             <% } %>
-            <button onclick="location.href='/<%= data._id %>/application'">New Leave Application</button>
+            <button class="btn btn-primary" style="margin-left:5px" onclick="location.href='/<%= data._id %>/application'">New Leave Application</button>
+            <form action="/logout?_method=DELETE" method="POST"
+                >
+            <button class="btn btn-primary" style="margin-left:5px" type="submit">Log Out</button></form>
         </div>
     </div>
     <br>

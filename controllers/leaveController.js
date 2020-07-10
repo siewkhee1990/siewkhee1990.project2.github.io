@@ -6,6 +6,7 @@ const repositoryController = require('../controllers/repositoryController');
 module.exports = {
     async dash(req, res) {
         try {
+            repositoryController.preventCrossOverPath(req.session.currentUser.uID, req.params.employeeID);
             let ID = req.params.employeeID;
             let [user] = await repositoryController.findUserByID(ID);
             let subUserTicket = await repositoryController.getSubUser(user.subordinate);
@@ -18,6 +19,7 @@ module.exports = {
     },
     async view(req, res) {
         try {
+            repositoryController.preventCrossOverPath(req.session.currentUser.uID, req.params.employeeID);
             let ID = req.params.employeeID;
             let [user] = await repositoryController.findUserByID(ID);
             let index = req.params.ticketIndex;
@@ -29,6 +31,7 @@ module.exports = {
         }
     },
     async apply(req, res) {
+        repositoryController.preventCrossOverPath(req.session.currentUser.uID, req.params.employeeID);
         let ID = req.params.employeeID;
         let [user] = await repositoryController.findUserByID(ID);
         let totalApplications = {
@@ -63,6 +66,7 @@ module.exports = {
     },
     async applicationSubmit(req, res) {
         try {
+            repositoryController.preventCrossOverPath(req.session.currentUser.uID, req.params.employeeID);
             let ID = req.params.employeeID;
             let [user] = await repositoryController.findUserByID(ID);
             let info = req.body;
@@ -90,6 +94,7 @@ module.exports = {
     },
     async edit(req, res) {
         try {
+            repositoryController.preventCrossOverPath(req.session.currentUser.uID, req.params.employeeID);
             let ID = req.params.employeeID;
             let [user] = await repositoryController.findUserByID(ID);
             let index = req.params.ticketIndex;
@@ -102,6 +107,7 @@ module.exports = {
     },
     async submitEdit(req, res) {
         try {
+            repositoryController.preventCrossOverPath(req.session.currentUser.uID, req.params.employeeID);
             let ID = req.params.employeeID;
             let [user] = await repositoryController.findUserByID(ID);
             let index = req.params.ticketIndex;
@@ -128,6 +134,7 @@ module.exports = {
     },
     async approve(req, res) {
         try {
+            repositoryController.preventCrossOverPath(req.session.currentUser.uID, req.params.employeeID);
             let ID = req.params.employeeID;
             let subName = req.params.subEmployeeName;
             let [user] = await repositoryController.findUserByID(ID);
@@ -145,6 +152,7 @@ module.exports = {
     },
     async reject(req, res) {
         try {
+            repositoryController.preventCrossOverPath(req.session.currentUser.uID, req.params.employeeID);
             let ID = req.params.employeeID;
             let subName = req.params.subEmployeeName;
             let [user] = await repositoryController.findUserByID(ID);
@@ -162,6 +170,7 @@ module.exports = {
     },
     async deleteTicket(req, res) {
         try {
+            repositoryController.preventCrossOverPath(req.session.currentUser.uID, req.params.employeeID);
             let ID = req.params.employeeID;
             let index = req.params.ticketIndex;
             let { modifiedCount } = await repositoryController.deleteTicket(ID, index);

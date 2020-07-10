@@ -1,9 +1,13 @@
 const db = require('../db');
 const ObjectId = require('mongodb').ObjectID;
 const moment = require('moment');
-//const { checkLogin } = require('./userController');
 
 module.exports = {
+    preventCrossOverPath(currentSession, ID) {
+        if ( currentSession !== ID ){
+            throw new Error('You are not allowed in this path!');
+        }
+    },
     async findUserbyIC(nric) {
         try {
             return await db.employeeLeave.find({ "nric": nric }).toArray();
@@ -35,6 +39,18 @@ module.exports = {
     async findUserByEmployeeID(employeeID) {
         try {
             return await db.employeeLeave.find({ "employeeID": employeeID }).toArray();
+        } catch (err) {
+            return res.render('errors/404', { err });
+        }
+    },
+    async updatePassword(obj) {
+        try {
+            return await db.user.findOneAndUpdate(
+                { "username": obj.username },
+                {
+                    $set: { "password": obj.password }
+                }
+            );
         } catch (err) {
             return res.render('errors/404', { err });
         }

@@ -6,6 +6,7 @@ const repositoryController = require('../controllers/repositoryController');
 module.exports = {
     async createEmployee(req, res) {
         try {
+            repositoryController.preventCrossOverPath(req.session.currentUser.uID, req.params.employeeID);
             let allUser = await repositoryController.findAll();
             let ID = req.params.employeeID;
             let idArr = [];
@@ -20,6 +21,7 @@ module.exports = {
     },
     async viewEmployee(req, res) {
         try {
+            repositoryController.preventCrossOverPath(req.session.currentUser.uID, req.params.employeeID);
             let ID = req.params.employeeID;
             let allUser = await repositoryController.findAll();
             let [user] = await repositoryController.findUserByID(ID);
@@ -30,6 +32,7 @@ module.exports = {
     },
     async viewEmployeeDetails(req, res) {
         try {
+            repositoryController.preventCrossOverPath(req.session.currentUser.uID, req.params.employeeID);
             let ownID = req.params.employeeID;
             let theEmployeeID = req.params.targetEmployee;
             let [theEmployeeData] = await repositoryController.findUserByID(theEmployeeID);
@@ -41,6 +44,7 @@ module.exports = {
     },
     async editEmployee(req, res) {
         try {
+            repositoryController.preventCrossOverPath(req.session.currentUser.uID, req.params.employeeID);
             let userID = req.params.employeeID;
             let updateID = req.params.targetEmployee;
             let [originalData] = await repositoryController.findUserByID(updateID);
@@ -52,13 +56,14 @@ module.exports = {
     },
     async createEmployeeSubmit(req, res) {
         try {
-            let existingUser = await repositoryController.findUserbyNRIC(req.body.nric);
+            let existingUser = await repositoryController.findUserbyIC(req.body.nric.toUpperCase());
             if (existingUser.length >= 1) {
                 throw new Error('user exists!');
             } else {
                 let ID = req.params.employeeID;
-                let [user] = await repositoryController.findUserByID(ID);
+                let [user] = await repositoryController.findUserByID(req.session.currentUser.uID, ID);
                 req.body.companyID = user.companyID;
+                req.body.nric = req.body.nric.toUpperCase();
                 let toEmployee = req.body.reportTo;
                 let theEmployeeID = req.body.employeeID;
                 if (!toEmployee) {
@@ -80,6 +85,7 @@ module.exports = {
     },
     async updateEmployee(req, res) {
         try {
+            repositoryController.preventCrossOverPath(req.session.currentUser.uID, req.params.employeeID);
             let ID = req.params.employeeID;
             let target = req.params.targetEmployee;
             let updateData = req.body;
@@ -94,6 +100,7 @@ module.exports = {
     },
     async deleteEmployee(req, res) {
         try {
+            repositoryController.preventCrossOverPath(req.session.currentUser.uID, req.params.employeeID);
             let ID = req.params.employeeID;
             let deleteID = req.params.targetEmployee;
             let [user] = await repositoryController.findUserByID(deleteID);

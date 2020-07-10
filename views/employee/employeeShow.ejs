@@ -90,12 +90,15 @@
                     <div class="form-group">
                         <label for="employeeStatus">Employee's Subordinate</label>
                         <% for ( let i = 0; i < allData.length; i++ ) { %>
+                            <% if ( allData[i].employeeID === data.employeeID) { %>
+                            <% } else { %>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="exampleCheck1" name="subordinate"
                                 value="<%= allData[i].employeeID %>"
                                 <%= data.subordinate.includes(allData[i].employeeID) ? "checked" : "" %> disabled>
                             <label class="form-check-label" for="subordinate"><%= allData[i].employeeName %></label>
                         </div>
+                        <% } %>
                         <% } %>
                     </div>
 
@@ -157,9 +160,9 @@
     </div>
     <div>
         <form action="/<%= userID %>/<%= theEmployeeID %>/edit">
-            <input type="submit" value="Edit Employee Info">
+            <input class="btn btn-primary" type="submit" value="Edit Employee Info">
         </form>
-        <button onclick="location.href='/<%=userID%>/employeeManage'">Go Back</button>
+        <button class="btn btn-primary" onclick="location.href='/<%=userID%>/employeeManage'">Go Back</button>
     </div>
     </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>

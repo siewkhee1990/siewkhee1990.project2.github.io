@@ -6,22 +6,17 @@ const bcrypt = require('bcrypt');
 const SALT_ROUND = process.env.SALT_ROUND || 10;
 
 module.exports = {
-    newForm(req, res) {
-
-    },
     async createSessions(req, res) {
         try {
             let data = req.body;
-            const [user] = await repositoryController.checkUsername(data.username);
-            console.log (user);
+            const [user] = await repositoryController.checkUsername(data.username.toUpperCase());
             if (!user) {
-                throw new Error('The username or password are incorrect')
-            } else if (!bcrypt.compareSync(data.password, user.password)) {
-                throw new Error('The username or password are incorrect')
+                throw new Error('Username is not registered, please register before logging in.');
+            } else if ( !bcrypt.compareSync(data.password, user.password) || data.username.toUpperCase() !== user.username.toUpperCase() ) {
+                throw new Error('The username or password are incorrect. Please try again.')
             } else {
                 req.session.currentUser = user;
-                console.log(req.session);
-                // return res.redirect('/'+req.session.currentUs);
+                return res.redirect('/'+req.session.currentUser.uID);
             }
         } catch (err) {
             return res.render('errors/404', { err });

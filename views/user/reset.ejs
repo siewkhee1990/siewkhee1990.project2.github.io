@@ -18,7 +18,7 @@
 </head>
 
 <body style="width:50%;margin:auto">
-    <form class="text-center border border-light p-5" action="#!">
+    <form class="text-center border border-light p-5" action="/resetPassword" method="POST">
         <h2>Reset password</h2>
         <h4>Please enter below required field</h4>
         <!-- Username -->
@@ -26,13 +26,13 @@
         <!-- Username -->
         <input type="text" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="Username" name="username" required>
         <!-- Password -->
-        <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password"
+        <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="New Password"
             name="password" required>
-        <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Confirmed Password"
+        <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Confirmed New Password"
             name="confirmedPassword" required>
         <!-- Sign in button -->
-        <button class="btn btn-info btn-block my-4" type="submit">Reset</button>
-        <button class="btn btn-info btn-block my-4" type="button" onclick="location.href='/'">Go Back</button>
+        <button class="btn btn-primary btn-block" type="submit">Reset</button>
+        <button class="btn btn-primary btn-block" type="button" onclick="location.href='/'">Go Back</button>
         </p>
     </form>
     <!-- Default form login -->
