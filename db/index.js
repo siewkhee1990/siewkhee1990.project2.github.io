@@ -1,6 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 
-const MONGO_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+const MONGO_URL = 'mongodb+srv://siewkhee1990:ealtelaWjnTIP4aG@cluster0-yxebn.mongodb.net/test';
+//process.env.MONGODB_URI || 'mongodb://localhost:27017';
 const DB_NAME = 'project';
 const COLLECTIONS = {
     EMPLOYEELEAVE: 'employeeLeave',

@@ -16,8 +16,8 @@ module.exports = {
             let newID = (Math.max(...idArr)) + 1;
             res.render('employee/create', { data: allUser, userID: ID, newID: newID })
         } catch (err) {
-            return res.render('errors/404', { err });
-        }
+            return err;
+        };
     },
     async viewEmployee(req, res) {
         try {

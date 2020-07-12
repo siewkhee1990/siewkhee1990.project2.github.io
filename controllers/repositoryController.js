@@ -4,7 +4,7 @@ const moment = require('moment');
 
 module.exports = {
     preventCrossOverPath(currentSession, ID) {
-        if ( currentSession !== ID ){
+        if (currentSession !== ID) {
             throw new Error('You are not allowed in this path!');
         }
     },
@@ -12,35 +12,35 @@ module.exports = {
         try {
             return await db.employeeLeave.find({ "nric": nric }).toArray();
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         }
     },
     async checkExistingUser(nric) {
         try {
             return await db.user.find({ "nric": nric }).toArray();
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         }
     },
     async createUser(data) {
         try {
             return await db.user.insertOne(data);
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         }
     },
     async checkUsername(username) {
         try {
             return await db.user.find({ "username": username }).toArray();
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         }
     },
     async findUserByEmployeeID(employeeID) {
         try {
             return await db.employeeLeave.find({ "employeeID": employeeID }).toArray();
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         }
     },
     async updatePassword(obj) {
@@ -52,7 +52,7 @@ module.exports = {
                 }
             );
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         }
     },
     async addSubordinate(targetID, ID) {
@@ -65,7 +65,7 @@ module.exports = {
                 }
             );
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         };
     },
     async employeeInfoUpdate(ID, data) {
@@ -94,7 +94,7 @@ module.exports = {
                 { upsert: true }
             )
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         };
     },
     async deleteEmployee(ID) {
@@ -103,7 +103,7 @@ module.exports = {
                 { "_id": new ObjectId(ID) }
             )
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         };
     },
     async deleteEmployeeIDinSubordinate(employeeID) {
@@ -113,14 +113,14 @@ module.exports = {
                 { $pull: { "subordinate": employeeID } }
             )
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         };
     },
     async findAll() {
         try {
             return await db.employeeLeave.find({}).toArray();
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         };
     },
     async createEmployee(obj) {
@@ -148,40 +148,48 @@ module.exports = {
                 }
             );
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         };
     },
     async getSubUser(arr) {
+        let subUserArr = [];
+        let subUserTicketArr = [];
         try {
-            let subUserArr = [];
-            let subUserTicketArr = [];
-            for (let i = 0; i < arr.length; i++) {
-                let [subUser] = await db.employeeLeave.find({ employeeID: arr[i] }).toArray();
-                subUserArr.push(subUser);
-            };
-            for (let i = 0; i < subUserArr.length; i++) {
-                for (let j = 0; j < subUserArr[i].tickets.length; j++) {
-                    subUserArr[i].tickets[j].index = j;
-                    subUserTicketArr.push(subUserArr[i].tickets[j]);
+            if (typeof arr === "string") {
+                let [subUser] = await db.employeeLeave.find({ employeeID: arr }).toArray();            
+                for (let i = 0; i < subUser.tickets.length; i++) {
+                    subUser.tickets[i].index = i;
+                    subUserTicketArr.push(subUser.tickets[i]);
                 };
-            };
+            } else if (typeof arr === "object") {
+                for (let i = 0; i < arr.length; i++) {
+                    let [subUser] = await db.employeeLeave.find({ employeeID: arr[i] }).toArray();
+                    subUserArr.push(subUser);
+                };
+                for (let i = 0; i < subUserArr.length; i++) {
+                    for (let j = 0; j < subUserArr[i].tickets.length; j++) {
+                        subUserArr[i].tickets[j].index = j;
+                        subUserTicketArr.push(subUserArr[i].tickets[j]);
+                    };
+                };
+            }
             return subUserTicketArr;
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         };
     },
     async findUserByID(ID) {
         try {
             return await db.employeeLeave.find({ "_id": new ObjectId(ID) }).toArray();
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         };
     },
     async findUserByName(name) {
         try {
             return await db.employeeLeave.find({ "employeeName": name }).toArray()
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         };
     },
     async insertTicket(ID, obj) {
@@ -191,7 +199,7 @@ module.exports = {
                 { $push: { tickets: obj } }
             )
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         };
     },
     momentifyTicketDate(arr) {
@@ -235,7 +243,7 @@ module.exports = {
             }
             return await db.employeeLeave.updateOne({ _id: new ObjectId(ID) }, arr_update_dict);
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         }
     },
     async approveLeave(subID, index, processorName) {
@@ -246,7 +254,7 @@ module.exports = {
             arr_update_dict["$set"]["tickets." + index + ".processedDate"] = new Date();
             return await db.employeeLeave.updateOne({ _id: new ObjectId(subID) }, arr_update_dict);
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         }
     },
     async rejectLeave(subID, index, processorName) {
@@ -256,7 +264,7 @@ module.exports = {
             arr_update_dict["$set"]["tickets." + index + ".processedBy"] = processorName;
             return await db.employeeLeave.updateOne({ _id: new ObjectId(subID) }, arr_update_dict);
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         }
     },
     async deleteTicket(ID, index) {
@@ -272,7 +280,7 @@ module.exports = {
                 { $pull: { tickets: null } }
             );
         } catch (err) {
-            return res.render('errors/404', { err });
+            return err;
         }
     }
 }
